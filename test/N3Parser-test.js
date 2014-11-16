@@ -400,7 +400,7 @@ describe('N3Parser', function () {
 
     it('should not parse improperly nested square brackets',
       shouldNotParse('<a> <b> [<c> <d>]].',
-                     'Expected punctuation to follow "_:b0" at line 1.'));
+                     'Expected punctuation or context to follow "_:b0" at line 1.'));
 
     it('should error when an object is not there',
       shouldNotParse('<a> <b>.',
@@ -408,7 +408,7 @@ describe('N3Parser', function () {
 
     it('should error when a dot is not there',
       shouldNotParse('<a> <b> <c>',
-                     'Expected punctuation to follow "c" at line 1.'));
+                     'Expected punctuation or context to follow "c" at line 1.'));
 
     it('should error with an abbreviation in the subject',
       shouldNotParse('a <a> <a>.',
@@ -481,6 +481,10 @@ describe('N3Parser', function () {
         triples.should.have.length(2);
       });
     });
+
+    it('should parse statements with a context',
+      shouldParse('<a> <b> <c> <d>.',
+        ['a', 'b', 'c', 'd']));
   });
 
   describe('An N3Parser instance with a document URI', function () {
