@@ -129,6 +129,17 @@ describe('N3Parser', function () {
                       '<http://a.org/bc/de> <http://a.org/b#e#f> <http://a.org/b#x/t>.\n' +
                       '<http://a.org/3a> <http://a.org/b#3a> b:a3.\n'));
 
+    it('should use prefixes with special characters',
+      shouldSerialize({ a: 'http://a.org/',
+                        b: 'http://a.org/b#',
+                        c: 'http://a.org/b' },
+                      [['http://a.org/À', 'http://a.org/b#Øe', 'http://a.org/ø123'],
+                       ['http://a.org/·', 'http://a.org/b#3a', 'http://a.org/b#a·']],
+                      '@prefix a: <http://a.org/>.\n' +
+                      '@prefix b: <http://a.org/b#>.\n\n' +
+                      'a:À b:Øe a:ø123.\n' +
+                      '<http://a.org/·> <http://a.org/b#3a> b:a·.\n'));
+
     it('should not repeat the same subjects',
       shouldSerialize([['abc', 'def', 'ghi'],
                        ['abc', 'mno', 'pqr'],
